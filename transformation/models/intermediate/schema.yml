@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: int_accounts
+    description: "Intermediate account model built from Salesforce account staging data."
+    columns:
+      - name: account_id
+        description: "Unique Salesforce account identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Account creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: is_deleted
+        description: "Indicates if account is deleted"
+        tests:
+          - accepted_values:
+              arguments:
+                values: [0]
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+
+  - name: int_contacts
+    description: "Intermediate contact model built from Salesforce contact staging data."
+    columns:
+      - name: contact_id
+        description: "Unique Salesforce contact identifier."
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        description: "Salesforce account identifier linked to the contact."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('int_accounts')
+                field: account_id
+      - name: first_name
+        description: "Contact first name."
+      - name: last_name
+        description: "Contact last name."
+      - name: full_name
+        description: "Full contact name composed from first and last name."
