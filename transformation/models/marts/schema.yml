@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: dim_accounts
+    description: "Dimensional account model built from Salesforce account staging data."
+    columns:
+      - name: account_id
+        description: "Unique Salesforce account identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Account creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: dim_campaign
+    description: "Dimensional campaign model built from Salesforce campaign staging data."
+    columns:
+      - name: campaign_id
+        description: "Unique Salesforce campaign identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Campaign creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: dim_case_history
+    description: "Dimensional case history model built from Salesforce case staging data."
+    columns:
+      - name: case_id
+        description: "Unique Salesforce case identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Case creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: dim_lead
+    description: "Dimensional lead model built from Salesforce lead staging data."
+    columns:
+      - name: lead_id
+        description: "Unique Salesforce lead identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Lead creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: fct_opportunity
+    description: "Fact opportunity model built from Salesforce opportunity staging data."
+    columns:
+      - name: opportunity_id
+        description: "Unique Salesforce opportunity identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Opportunity creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: fct_case
+    description: "Fact case model built from Salesforce case staging data."
+    columns:
+      - name: case_id
+        description: "Unique Salesforce case identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Case creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."

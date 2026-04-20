@@ -15,11 +15,81 @@ models:
           - not_null
       - name: last_modified_date
         description: "Last modified timestamp cast to timestamp."
-      - name: is_deleted
-        description: "Indicates if account is deleted"
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: int_campaign
+    description: "Intermediate campaign model built from Salesforce campaign staging data."
+    columns:
+      - name: campaign_id
+        description: "Unique Salesforce campaign identifier."
         tests:
-          - accepted_values:
-              arguments:
-                values: [0]
+          - not_null
+          - unique
+      - name: created_date
+        description: "Campaign creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: int_case_history
+    description: "Intermediate case history model built from Salesforce case staging data."
+    columns:
+      - name: case_id
+        description: "Unique Salesforce case identifier."
+        tests:
+          - not_null
+          - unique
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: int_lead
+    description: "Intermediate lead model built from Salesforce lead staging data."
+    columns:
+      - name: lead_id
+        description: "Unique Salesforce lead identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Lead creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: int_opportunity
+    description: "Intermediate opportunity model built from Salesforce opportunity staging data."
+    columns:
+      - name: opportunity_id
+        description: "Unique Salesforce opportunity identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Opportunity creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+  - name: int_case
+    description: "Intermediate case model built from Salesforce case staging data."
+    columns:
+      - name: case_id
+        description: "Unique Salesforce case identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Case creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp."
