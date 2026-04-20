@@ -58,13 +58,13 @@ enriched as (
         -- SLA & Escalation
         -- ========================
         isclosed as is_closed,
-        closeddate as closed_date,
+        cast(closeddate as date) as closed_date,
         isescalated as is_escalated,
 
-        slastartdate as sla_start_date,
-        slaexitdate as sla_exit_date,
+        cast(slastartdate as date) as sla_start_date,
+        cast(slaexitdate as date) as sla_exit_date,
         isstopped as is_stopped,
-        stopstartdate as stop_start_date,
+        cast(stopstartdate as date) as stop_start_date,
 
         -- ========================
         -- Flags / Indicators

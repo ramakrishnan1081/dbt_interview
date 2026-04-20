@@ -57,7 +57,7 @@ enriched as (
         -- Conversion Info
         -- ========================
         isconverted as is_converted,
-        converteddate as converted_date,
+        cast(converteddate as date) as converted_date,
         convertedaccountid as converted_account_id,
         convertedcontactid as converted_contact_id,
         convertedopportunityid as converted_opportunity_id,
@@ -85,7 +85,7 @@ enriched as (
         -- ========================
         -- Timestamps
         -- ========================
-        createddate as created_date,
+        cast(createddate as date) as created_date,
         lastmodifieddate as last_modified_date,
         systemmodstamp as system_modstamp
 
