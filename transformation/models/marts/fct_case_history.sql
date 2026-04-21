@@ -1,46 +1,35 @@
-with source as (
+{{
+    config(
+      materialized='incremental',
+      unique_key='case_history_id'
+    )
+}}
 
+with max_existing as (
+    select max(event_timestamp) as max_event_timestamp
+    from {{ this }}
+),
+
+source as (
     select *
     from {{ ref('int_case_history') }}
-
+    {% if is_incremental() %}
+      where last_modified_date > (select max_event_timestamp from max_existing)
+    {% endif %}
 ),
 
 fact as (
 
     select
-        -- ========================
-        -- Surrogate Key
-        -- ========================
         {{ dbt_utils.generate_surrogate_key(['case_history_id']) }} as case_history_sk,
-
-        -- ========================
-        -- Business Keys
-        -- ========================
         case_history_id,
         case_id,
-
-        -- ========================
-        -- Dimension Keys
-        -- ========================
         owner_id,
         last_modified_by_id,
-
-        -- ========================
-        -- Event Timestamp
-        -- ========================
         last_modified_date as event_timestamp,
-
-        -- ========================
-        -- Event Attributes
-        -- ========================
         status,
         previous_update,
-
-        -- ========================
-        -- Derived Metrics
-        -- ========================
         1 as event_count
-
     from source
 
 )

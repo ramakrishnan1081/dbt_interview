@@ -1,10 +1,18 @@
+{{
+    config(
+      materialized='incremental',
+      unique_key='case_id'
+    )
+}}
 with source as (
 
     select *
     from {{ ref('int_case') }}
+    {% if is_incremental() %}
+      where last_modified_date > (select max(last_modified_date) from {{ this }})
+    {% endif %}
 
 ),
-
 fact as (
 
     select

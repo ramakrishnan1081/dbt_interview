@@ -33,38 +33,6 @@ models:
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp."
-  - name: dim_case_history
-    description: "Dimensional case history model built from Salesforce case staging data."
-    columns:
-      - name: case_id
-        description: "Unique Salesforce case identifier."
-        tests:
-          - not_null
-          - unique
-      - name: created_date
-        description: "Case creation timestamp cast to timestamp."
-        tests:
-          - not_null
-      - name: last_modified_date
-        description: "Last modified timestamp cast to timestamp."
-      - name: system_modstamp
-        description: "System modification timestamp cast to timestamp."
-  - name: dim_lead
-    description: "Dimensional lead model built from Salesforce lead staging data."
-    columns:
-      - name: lead_id
-        description: "Unique Salesforce lead identifier."
-        tests:
-          - not_null
-          - unique
-      - name: created_date
-        description: "Lead creation timestamp cast to timestamp."
-        tests:
-          - not_null
-      - name: last_modified_date
-        description: "Last modified timestamp cast to timestamp."
-      - name: system_modstamp
-        description: "System modification timestamp cast to timestamp."
   - name: fct_opportunity
     description: "Fact opportunity model built from Salesforce opportunity staging data."
     columns:
@@ -96,4 +64,4 @@ models:
       - name: last_modified_date
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
-        description: "System modification timestamp cast to timestamp."
+        description: "System modification timestamp cast to timestamp." 

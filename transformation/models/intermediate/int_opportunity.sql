@@ -65,8 +65,8 @@ enriched as (
         -- Dates
         -- ========================
         closedate as close_date,
-        laststagechangedate as last_stage_change_date,
-        lastactivitydate as last_activity_date,
+        cast(laststagechangedate as timestamp) as last_stage_change_date,
+        cast(lastactivitydate as timestamp) as last_activity_date,
 
         fiscalyear as fiscal_year,
         fiscalquarter as fiscal_quarter,
