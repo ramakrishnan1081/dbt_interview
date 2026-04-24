@@ -1,7 +1,8 @@
 {{
     config(
       materialized='incremental',
-      unique_key='case_history_id'
+      unique_key='case_history_id',
+      tags=['fact']
     )
 }}
 

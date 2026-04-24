@@ -1,3 +1,5 @@
+{{ config(tags=['dim']) }}
+
 with source as (
 
     select * 

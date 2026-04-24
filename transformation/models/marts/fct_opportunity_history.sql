@@ -1,7 +1,8 @@
 {{
     config(
         materialized='incremental',
-        unique_key='opportunity_history_id'
+        unique_key='opportunity_history_id',
+        tags=['fact']
     )
 }}
 

@@ -26,12 +26,15 @@ models:
     intermediate:
       +materialized: table
       +schema: intermediate
+      +tags: ["intermediate"]
     marts:
       +schema: marts
       +materialized: table
+      +tags: ["marts"]
     staging:
       +schema: staging
       +materialized: view
+      +tags: ["staging"]
 
 vars:
   "dbt_date:time_zone": "Europe/Berlin"

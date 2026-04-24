@@ -1,7 +1,8 @@
 {{
     config(
       materialized='incremental',
-      unique_key='case_id'
+      unique_key='case_id',
+      tags=['fact']
     )
 }}
 with source as (
@@ -45,6 +46,7 @@ fact as (
         sla_exit_date,
         stop_start_date,
         last_modified_date,
+        current_timestamp() as  system_modstamp,
 
         -- ========================
 

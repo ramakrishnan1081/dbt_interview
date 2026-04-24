@@ -1,125 +1,36 @@
-with source as (
+{{ config(tags=['dim']) }}
 
-    select *
-    from {{ ref('int_products') }}
+select
+    {{ dbt_utils.generate_surrogate_key(['product_id', 'dbt_valid_from']) }} as product_sk,
 
-),
+    product_id,
 
--- 1. Prepare + hash
-prepared as (
+    product_name,
+    product_code,
+    family,
+    type,
+    product_class,
+    is_active,
+    is_archived,
 
-    select
-        product_id,
+    description,
+    sku,
+    external_id,
+    external_data_source_id,
+    source_product_id,
+    seller_id,
+    display_url,
+    quantity_unit_of_measure,
 
-        -- SCD attributes
-        product_name,
-        product_code,
-        family,
-        type,
-        product_class,
-        is_active,
-        is_archived,
+    created_date,
 
-        -- non-SCD attributes
-        description,
-        sku,
-        external_id,
-        external_data_source_id,
-        source_product_id,
-        seller_id,
-        display_url,
-        quantity_unit_of_measure,
+    dbt_valid_from as effective_start_date,
+    coalesce(dbt_valid_to, '9999-12-31') as effective_end_date,
 
-        created_date,
-        last_modified_date,
+    case 
+        when dbt_valid_to is null then true 
+        else false 
+    end as is_current
 
-        -- change tracking hash
-        md5(
-            coalesce(product_name,'') ||
-            coalesce(product_code,'') ||
-            coalesce(family,'') ||
-            coalesce(type,'') ||
-            coalesce(product_class,'') ||
-            coalesce(is_active::text,'') ||
-            coalesce(is_archived::text,'')
-        ) as scd_hash
-
-    from source
-
-),
-
--- 2. Detect changes
-scd as (
-
-    select
-        *,
-
-        last_modified_date as effective_start_date,
-
-        lead(last_modified_date) over (
-            partition by product_id
-            order by last_modified_date
-        ) as effective_end_date,
-
-        lag(scd_hash) over (
-            partition by product_id
-            order by last_modified_date
-        ) as prev_hash
-
-    from prepared
-
-),
-
--- 3. Keep only changed records
-filtered as (
-
-    select *
-    from scd
-    where prev_hash is null
-       or scd_hash != prev_hash
-
-),
-
--- 4. Finalize
-final as (
-
-    select
-        -- surrogate key (versioned)
-        {{ dbt_utils.generate_surrogate_key(['product_id', 'effective_start_date']) }} as product_sk,
-
-        product_id,
-
-        -- SCD attributes
-        product_name,
-        product_code,
-        family,
-        type,
-        product_class,
-        is_active,
-        is_archived,
-
-        -- non-SCD attributes
-        description,
-        sku,
-        external_id,
-        external_data_source_id,
-        source_product_id,
-        seller_id,
-        display_url,
-        quantity_unit_of_measure,
-
-        created_date,
-
-        effective_start_date,
-        coalesce(effective_end_date, '9999-12-31') as effective_end_date,
-
-        case 
-            when effective_end_date is null then true 
-            else false 
-        end as is_current
-
-    from filtered
-
-)
-
-select * from final
+from {{ ref('product_snapshot') }}
+where dbt_valid_to is null

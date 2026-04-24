@@ -1,100 +1,27 @@
-with source as (
+{{ config(tags=['dim']) }}
 
-    select *
-    from {{ ref('int_pricebook_entry') }}
+select
+    {{ dbt_utils.generate_surrogate_key(['pricebook_entry_id', 'dbt_valid_from']) }} as pricebook_entry_sk,
 
-),
+    pricebook_entry_id,
 
--- 1. Prepare + hash
-prepared as (
+    pricebook_id,
+    product_id,
 
-    select
-        pricebook_entry_id,
+    unit_price,
+    use_standard_price,
+    is_active,
+    is_archived,
 
-        pricebook_id,
-        product_id,
+    created_date,
 
-        -- SCD attributes
-        unit_price,
-        use_standard_price,
-        is_active,
-        is_archived,
+    dbt_valid_from as effective_start_date,
+    coalesce(dbt_valid_to, '9999-12-31') as effective_end_date,
 
-        created_date,
-        last_modified_date,
+    case 
+        when dbt_valid_to is null then true 
+        else false 
+    end as is_current
 
-        -- change tracking
-        md5(
-            coalesce(unit_price::text,'') ||
-            coalesce(use_standard_price::text,'') ||
-            coalesce(is_active::text,'') ||
-            coalesce(is_archived::text,'')
-        ) as scd_hash
-
-    from source
-
-),
-
--- 2. Detect changes
-scd as (
-
-    select
-        *,
-
-        last_modified_date as effective_start_date,
-
-        lead(last_modified_date) over (
-            partition by pricebook_entry_id
-            order by last_modified_date
-        ) as effective_end_date,
-
-        lag(scd_hash) over (
-            partition by pricebook_entry_id
-            order by last_modified_date
-        ) as prev_hash
-
-    from prepared
-
-),
-
--- 3. Keep only changes
-filtered as (
-
-    select *
-    from scd
-    where prev_hash is null
-       or scd_hash != prev_hash
-
-),
-
--- 4. Final
-final as (
-
-    select
-        {{ dbt_utils.generate_surrogate_key(['pricebook_entry_id', 'effective_start_date']) }} as pricebook_entry_sk,
-
-        pricebook_entry_id,
-
-        pricebook_id,
-        product_id,
-
-        unit_price,
-        use_standard_price,
-        is_active,
-        is_archived,
-
-        created_date,
-
-        effective_start_date,
-        coalesce(effective_end_date, '9999-12-31') as effective_end_date,
-
-        case 
-            when effective_end_date is null then true 
-            else false 
-        end as is_current
-
-    from filtered
-
-)
-
-select * from final
+from {{ ref('pricebook_entry_snapshot') }}
+where dbt_valid_to is null

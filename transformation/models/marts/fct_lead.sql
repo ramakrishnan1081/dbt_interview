@@ -1,7 +1,8 @@
 {{
     config(
       materialized='incremental',
-      unique_key='lead_id'
+      unique_key='lead_id',
+      tags=['fact']
     )
 }}
 
