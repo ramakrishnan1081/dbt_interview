@@ -40,7 +40,7 @@ models:
         description: "Unique Salesforce opportunity identifier."
         tests:
           - not_null
-          - unique
+          - unique   
       - name: created_date
         description: "Opportunity creation timestamp cast to timestamp."
         tests:
@@ -49,6 +49,22 @@ models:
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp."
+      - name: account_id
+        description: "Foreign key to dim_accounts.account_id."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_accounts')
+                field: account_id
+      - name: contact_id
+        description: "Foreign key to dim_contacts.contact_id."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_contacts')
+                field: contact_id
   - name: fct_case
     description: "Fact case model built from Salesforce case staging data."
     columns:
@@ -65,3 +81,64 @@ models:
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp." 
+  - name: fct_lead
+    description: "Fact lead model built from Salesforce lead staging data."
+    columns:
+      - name: lead_id
+        description: "Unique Salesforce lead identifier."
+        tests:
+          - not_null
+          - unique
+      - name: created_date
+        description: "Lead creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."
+      - name: converted_account_id
+        description: "Foreign key to dim_accounts.account_id for converted leads."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_accounts')
+                field: account_id
+      - name: converted_contact_id
+        description: "Foreign key to dim_contacts.contact_id for converted leads."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_contacts')
+                field: contact_id
+      - name: converted_opportunity_id
+        description: "Foreign key to fct_opportunity.opportunity_id for converted leads."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('fct_opportunity')
+                field: opportunity_id
+  - name: fct_case_history
+    description: "Fact case history model built from Salesforce case history staging data."
+    columns:
+      - name: case_history_id
+        description: "Unique identifier for each case history record."
+        tests:
+          - not_null
+          - unique
+      - name: case_id
+        description: "Foreign key to fct_case.case_id."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_case')
+                field: case_id
+      - name: created_date
+        description: "Case history creation timestamp cast to timestamp."
+        tests:
+          - not_null
+      - name: last_modified_date
+        description: "Last modified timestamp cast to timestamp."
+      - name: system_modstamp
+        description: "System modification timestamp cast to timestamp."

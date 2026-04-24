@@ -1,0 +1,5 @@
+campaign_sk,campaign_id,campaign_name,type,status,is_active,parent_id,owner_id,description,start_date,end_date,last_activity_date,created_date,effective_start_date,effective_end_date
+ed1abfa96846258cef9a57e76f5fe446,701Hp0000018sDmIAI,"GC Product Webinar - Jan 7, 2002",Webinar,Completed,1,,005Hp00000hnUYPIA2,,2023-04-10,2023-04-10,,2023-10-28 20:45:25,2026-04-24 06:47:20.119073,9999-12-31
+f864c0b64584b47e3ee516b03b8f3663,701Hp0000018sDnIAI,"User Conference - Jun 17-19, 2002",Conference,Planned,1,,005Hp00000hnUYPIA2,,2023-09-18,2023-09-20,,2023-10-28 20:45:25,2026-04-24 06:47:20.119073,9999-12-31
+ae9cf1c8c7b63cf130278c89fde34c45,701Hp0000018sDoIAI,"DM Campaign to Top Customers - Nov 12-23, 2001",Direct Mail,Completed,1,,005Hp00000hnUYPIA2,,2023-02-13,2023-02-24,,2023-10-28 20:45:25,2026-04-24 06:47:20.119073,9999-12-31
+f10acfa23f8922543383a7681e43ffc3,701Hp0000018sDpIAI,"International Electrical Engineers Association Trade Show - Mar 4-5, 2002",Trade Show,Planned,1,,005Hp00000hnUYPIA2,,2023-06-05,2023-06-06,,2023-10-28 20:45:25,2026-04-24 06:47:20.119073,9999-12-31

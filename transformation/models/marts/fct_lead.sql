@@ -22,32 +22,38 @@ source as (
 
 fact as (
     select
-        {{ dbt_utils.generate_surrogate_key(['lead_id']) }} as lead_sk,
-        lead_id,
-        owner_id,
-        converted_account_id,
-        converted_contact_id,
-        converted_opportunity_id,
-        created_date,
-        converted_date,
-        last_activity_date,
-        case when is_converted then 1 else 0 end as converted_flag,
-        case when is_converted and converted_date is not null
-             then datediff('day', created_date, converted_date)
+        {{ dbt_utils.generate_surrogate_key(['c.lead_id']) }} as lead_sk,
+        c.lead_id,
+        c.owner_id,
+        c.converted_account_id,
+        c.converted_contact_id,
+        c.converted_opportunity_id,
+        c.created_date,
+        c.converted_date,
+        c.last_activity_date,
+        case when c.is_converted then 1 else 0 end as converted_flag,
+        case when c.is_converted and c.converted_date is not null
+             then datediff('day', c.created_date, c.converted_date)
         end as conversion_days,
-        has_email,
-        has_phone,
-        lead_source,
-        status,
-        industry,
-        rating,
-        company,
-        title,
-        has_opted_out_of_email,
-        do_not_call,
+        c.has_email,
+        c.has_phone,
+        c.lead_source,
+        c.status,
+        c.industry,
+        c.rating,
+        c.company,
+        c.title,
+        c.has_opted_out_of_email,
+        c.do_not_call,
         -- expose system_modstamp so it exists in the target table
-        system_modstamp
-    from source
+        c.system_modstamp
+    from source c
+    inner join {{ ref('dim_accounts') }} a
+        on c.converted_account_id = a.account_id
+    inner join {{ ref('dim_contacts') }} ct
+        on c.converted_contact_id = ct.contact_id
+    inner join {{ ref('fct_opportunity') }} o
+        on c.converted_opportunity_id = o.opportunity_id
 )
 
 select * from fact

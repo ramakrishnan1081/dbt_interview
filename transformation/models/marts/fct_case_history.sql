@@ -22,16 +22,20 @@ source as (
 fact as (
 
     select
-        {{ dbt_utils.generate_surrogate_key(['case_history_id']) }} as case_history_sk,
-        case_history_id,
-        case_id,
-        owner_id,
-        last_modified_by_id,
-        last_modified_date as event_timestamp,
-        status,
-        previous_update,
+        {{ dbt_utils.generate_surrogate_key(['c.case_history_id']) }} as case_history_sk,
+        c.case_history_id,
+        c.case_id,
+        c.owner_id,
+        c.last_modified_by_id,
+        c.last_modified_date as event_timestamp,
+        c.status,
+        c.previous_update,
         1 as event_count
-    from source
+    from source c
+    inner join {{ ref('fct_case') }} a
+        on c.case_id = a.case_id
+    inner join {{ ref('dim_user') }} u
+        on c.owner_id = u.user_id
 
 )
 

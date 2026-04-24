@@ -20,68 +20,72 @@ fact as (
         -- ========================
         -- Surrogate Key
         -- ========================
-        {{ dbt_utils.generate_surrogate_key(['case_id']) }} as case_sk,
+        {{ dbt_utils.generate_surrogate_key(['c.case_id']) }} as case_sk,
 
         -- ========================
         -- Business Keys
         -- ========================
-        case_id,
-        case_number,
+        c.case_id,
+        c.case_number,
 
         -- ========================
         -- Dimension Keys
         -- ========================
-        account_id,
-        contact_id,
-        owner_id,
-        product_id,
-        parent_case_id,
+        c.account_id,
+        c.contact_id,
+        c.owner_id,
+        c.product_id,
+        c.parent_case_id,
 
         -- ========================
         -- Attributes
         -- ========================
-        created_date,
-        closed_date,
-        sla_start_date,
-        sla_exit_date,
-        stop_start_date,
-        last_modified_date,
-        current_timestamp() as  system_modstamp,
+        c.created_date,
+        c.closed_date,
+        c.sla_start_date,
+        c.sla_exit_date,
+        c.stop_start_date,
+        c.last_modified_date,
+        now() as  system_modstamp,
 
         -- ========================
 
         -- resolution time
         case 
-            when closed_date is not null 
-            then datediff('day', created_date, closed_date)
+            when c.closed_date is not null 
+            then datediff('day', c.created_date, c.closed_date)
         end as resolution_days,
 
         -- SLA duration
         case 
-            when sla_start_date is not null 
-             and sla_exit_date is not null
-            then datediff('day', sla_start_date, sla_exit_date)
+            when c.sla_start_date is not null 
+             and c.sla_exit_date is not null
+            then datediff('day', c.sla_start_date, c.sla_exit_date)
         end as sla_duration_days,
 
         -- ========================
         -- Flags
         -- ========================
-        is_closed,
-        is_escalated,
-        is_closed_on_create,
-        is_stopped,
-        sla_violation,
-        potential_liability,
+        c.is_closed,
+        c.is_escalated,
+        c.is_closed_on_create,
+        c.is_stopped,
+        c.sla_violation,
+        c.potential_liability,
 
-        type,
-        status,
-        reason,
-        priority,
-        origin,
+        c.type,
+        c.status,
+        c.reason,
+        c.priority,
+        c.origin,
 
-        subject
+        c.subject
 
-    from source
+    from source c
+    inner join {{ ref('dim_accounts') }} a on c.account_id = a.account_id
+    inner join {{ ref('dim_contacts') }} ct on c.contact_id = ct.contact_id
+    inner join {{ ref('dim_user') }} u on c.owner_id = u.user_id
+    left join {{ ref('dim_products') }} p on c.product_id = p.product_id
 
 )
 
