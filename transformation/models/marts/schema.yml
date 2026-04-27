@@ -25,6 +25,12 @@ models:
                 combination_of_columns:
                   - account_id
                   - ticker_symbol
+      - name: account_number
+        description: "Account number from Salesforce account staging data."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "~ '^[A-Z]{2}[0-9]{6}(-[A-Z])?$'"
   - name: dim_campaign
     description: "Dimensional campaign model built from Salesforce campaign staging data."
     columns:
