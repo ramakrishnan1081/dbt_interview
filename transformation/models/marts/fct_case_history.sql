@@ -30,7 +30,6 @@ fact as (
         c.last_modified_date as event_timestamp,
         c.status,
         c.previous_update,
-        1 as event_count
     from source c
     inner join {{ ref('fct_case') }} a
         on c.case_id = a.case_id

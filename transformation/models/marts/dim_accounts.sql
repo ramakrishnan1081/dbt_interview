@@ -1,7 +1,7 @@
 {{ config(tags=['dim']) }}
 
 select
-    {{ dbt_utils.generate_surrogate_key(['account_id', 'dbt_valid_from']) }} as account_sk,
+    {{ dbt_utils.generate_surrogate_key(['account_id', 'ticker_symbol']) }} as account_sk,
 
     account_id,
     account_name,

@@ -17,6 +17,14 @@ models:
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp."
+      - name: account_sk
+        description: "Surrogate key for the account dimension generated using dbt_utils.generate_surrogate_key on account_id and tick."
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                combination_of_columns:
+                  - account_id
+                  - ticker_symbol
   - name: dim_campaign
     description: "Dimensional campaign model built from Salesforce campaign staging data."
     columns:
@@ -134,10 +142,6 @@ models:
               arguments:
                 to: ref('fct_case')
                 field: case_id
-      - name: created_date
-        description: "Case history creation timestamp cast to timestamp."
-        tests:
-          - not_null
       - name: last_modified_date
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
