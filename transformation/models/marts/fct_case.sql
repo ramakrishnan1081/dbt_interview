@@ -36,6 +36,8 @@ fact as (
         c.owner_id,
         c.product_id,
         c.parent_case_id,
+        pe.pricebook_entry_sk,
+        pe.pricebook_entry_id,
 
         -- ========================
         -- Attributes
@@ -90,6 +92,8 @@ fact as (
      and u.effective_end_date = '9999-12-31'
     left join {{ ref('dim_products') }} p on c.product_id = p.product_id
      and p.effective_end_date = '9999-12-31'
+    left join {{ ref('dim_pricebook_entry') }} pe on c.product_id = pe.product_id
+     and pe.is_current = true
 
 )
 

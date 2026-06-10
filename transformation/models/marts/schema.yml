@@ -94,7 +94,21 @@ models:
       - name: last_modified_date
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
-        description: "System modification timestamp cast to timestamp." 
+        description: "System modification timestamp cast to timestamp."
+      - name: pricebook_entry_sk
+        description: "Foreign key to dim_pricebook_entry.pricebook_entry_sk for product pricing information."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_pricebook_entry')
+                field: pricebook_entry_sk
+      - name: pricebook_entry_id
+        description: "Unique Salesforce pricebook entry identifier."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_pricebook_entry')
+                field: pricebook_entry_id
   - name: fct_lead
     description: "Fact lead model built from Salesforce lead staging data."
     columns:
@@ -152,3 +166,43 @@ models:
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp."
+  - name: dim_pricebook_entry
+    description: "Dimensional pricebook entry model tracking product pricing by pricebook."
+    columns:
+      - name: pricebook_entry_id
+        description: "Unique Salesforce pricebook entry identifier."
+        tests:
+          - not_null
+          - unique
+      - name: pricebook_entry_sk
+        description: "Surrogate key for the pricebook entry dimension."
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        description: "Foreign key to dim_products.product_id."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+      - name: pricebook_id
+        description: "Unique Salesforce pricebook identifier."
+        tests:
+          - not_null
+      - name: unit_price
+        description: "Price per unit of the product in the pricebook."
+        tests:
+          - not_null
+      - name: is_active
+        description: "Flag indicating if the pricebook entry is active."
+        tests:
+          - not_null
+      - name: created_date
+        description: "Pricebook entry creation timestamp."
+        tests:
+          - not_null
+      - name: is_current
+        description: "Flag indicating if this is the current version of the pricebook entry."
+        tests:
+          - not_null
