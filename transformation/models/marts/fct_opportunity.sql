@@ -29,12 +29,11 @@ source as (
 
 fact as (
     select
-        {{ dbt_utils.generate_surrogate_key(['c.opportunity_id']) }} as opportunity_sk,
         c.opportunity_id,
-        c.account_id,
-        c.contact_id,
-        c.campaign_id,
-        c.owner_id,
+        a.account_sk,
+        ct.contact_sk,
+        cp.campaign_sk,
+        u.user_sk,
         c.created_date,
         c.close_date,
         c.last_stage_change_date,
@@ -65,8 +64,13 @@ fact as (
         c.event_timestamp
     from source c
     inner join {{ ref('dim_accounts') }} a on c.account_id = a.account_id
+    and a.effective_end_date = '9999-12-31'
     inner join {{ ref('dim_contacts') }} ct on c.contact_id = ct.contact_id
+    and ct.effective_end_date = '9999-12-31'
     inner join {{ ref('dim_campaign') }} cp on c.campaign_id = cp.campaign_id
+    and cp.effective_end_date = '9999-12-31'
+    inner join {{ ref('dim_users') }} u on c.owner_id = u.user_id
+    and u.effective_end_date = '9999-12-31'
 )
 
 select * from fact
