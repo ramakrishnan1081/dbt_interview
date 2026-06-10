@@ -29,6 +29,7 @@ source as (
 
 fact as (
     select
+        {{ dbt_utils.generate_surrogate_key(['c.opportunity_id', 'c.last_modified_date']) }} as opportunity_sk,
         c.opportunity_id,
         a.account_sk,
         ct.contact_sk,

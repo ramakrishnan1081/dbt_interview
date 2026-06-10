@@ -63,22 +63,22 @@ models:
         description: "Last modified timestamp cast to timestamp."
       - name: system_modstamp
         description: "System modification timestamp cast to timestamp."
-      - name: account_id
-        description: "Foreign key to dim_accounts.account_id."
+      - name: account_sk
+        description: "Foreign key to dim_accounts.account_skl."
         tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('dim_accounts')
-                field: account_id
-      - name: contact_id
+                field: account_sk
+      - name: contact_sk
         description: "Foreign key to dim_contacts.contact_id."
         tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('dim_contacts')
-                field: contact_id
+                field: contact_sk
   - name: fct_case
     description: "Fact case model built from Salesforce case staging data."
     columns:
@@ -117,14 +117,14 @@ models:
           - relationships:
               arguments:
                 to: ref('dim_accounts')
-                field: account_id
+                field: account_sk
       - name: converted_contact_id
         description: "Foreign key to dim_contacts.contact_id for converted leads."
         tests:
           - relationships:
               arguments:
                 to: ref('dim_contacts')
-                field: contact_id
+                field: contact_sk
       - name: converted_opportunity_id
         description: "Foreign key to fct_opportunity.opportunity_id for converted leads."
         tests:
