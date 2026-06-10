@@ -40,3 +40,4 @@ select
     coalesce(dbt_valid_to, '9999-12-31') as effective_end_date
 
 from {{ ref('accounts_snapshot') }}
+where dbt_valid_to is null

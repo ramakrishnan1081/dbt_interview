@@ -69,7 +69,7 @@ fact as (
     and ct.effective_end_date = '9999-12-31'
     inner join {{ ref('dim_campaign') }} cp on c.campaign_id = cp.campaign_id
     and cp.effective_end_date = '9999-12-31'
-    inner join {{ ref('dim_users') }} u on c.owner_id = u.user_id
+    inner join {{ ref('dim_user') }} u on c.owner_id = u.user_id
     and u.effective_end_date = '9999-12-31'
 )
 

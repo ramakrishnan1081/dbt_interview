@@ -83,9 +83,13 @@ fact as (
 
     from source c
     inner join {{ ref('dim_accounts') }} a on c.account_id = a.account_id
+     and a.effective_end_date = '9999-12-31'
     inner join {{ ref('dim_contacts') }} ct on c.contact_id = ct.contact_id
+     and ct.effective_end_date = '9999-12-31'
     inner join {{ ref('dim_user') }} u on c.owner_id = u.user_id
+     and u.effective_end_date = '9999-12-31'
     left join {{ ref('dim_products') }} p on c.product_id = p.product_id
+     and p.effective_end_date = '9999-12-31'
 
 )
 
