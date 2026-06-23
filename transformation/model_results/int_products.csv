@@ -1,0 +1,18 @@
+product_id,product_name,product_code,description,family,type,product_class,is_active,is_archived,sku,external_id,external_data_source_id,source_product_id,seller_id,display_url,quantity_unit_of_measure,created_date,last_modified_date,system_modstamp
+01tHp000009xIesIAE,GenWatt Diesel 1000kW,GC1060,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIetIAE,GenWatt Diesel 200kW,GC1040,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIeuIAE,GenWatt Diesel 10kW,GC1020,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIevIAE,Installation: Industrial - High,IN7080,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIewIAE,SLA: Silver,SL9040,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIexIAE,GenWatt Propane 500kW,GC3040,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIeyIAE,SLA: Platinum,SL9080,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIezIAE,GenWatt Propane 100kW,GC3020,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf0IAE,GenWatt Propane 1500kW,GC3060,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf1IAE,SLA: Bronze,SL9020,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf2IAE,GenWatt Gasoline 750kW,GC5040,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf3IAE,Installation: Portable,IN7020,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf4IAE,SLA: Gold,SL9060,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf5IAE,GenWatt Gasoline 300kW,GC5020,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf6IAE,Installation: Industrial - Low,IN7040,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf7IAE,GenWatt Gasoline 2000kW,GC5060,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
+01tHp000009xIf8IAE,Installation: Industrial - Medium,IN7060,,,,Simple,1,0,,,,,,,,2023-10-28 20:45:25,2023-10-28 20:45:25,2023-10-28 20:45:25
