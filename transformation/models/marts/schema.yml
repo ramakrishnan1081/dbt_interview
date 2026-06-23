@@ -24,7 +24,7 @@ models:
               arguments:
                 combination_of_columns:
                   - account_id
-                  - ticker_symbol
+                  - effective_start_date
       - name: account_number
         description: "Account number from Salesforce account staging data."
         tests:
